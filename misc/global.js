@@ -123,7 +123,6 @@ $(window).scroll($.throttle(100, navbar));
 function navbar(){
 	if(typeof navbar.element === 'undefined'){
 		navbar.element = $('.navbar');
-		navbar.height = navbar.element.height();
 		navbar.headerHeight = $('.header').height();
 	}
 	var viewOffset = $(window).scrollTop();
@@ -177,6 +176,9 @@ function setState(link){
 			state =  window.location.pathname + window.location.hash;
 			setState.header.css('opacity', 1);
 			setState.content.css('opacity', 1);
+			
+			// Code highlighting.
+			$('code').each(function(i, block){hljs.highlightBlock(block);});
 		});
 	}, 400);
 }
