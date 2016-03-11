@@ -1,0 +1,30 @@
+<aside class="content-nav">
+	<h2>Sections</h2>
+	<ul>
+		<li><a href="#lowercase">Filenames in This Directory to Lowercase</a></li>
+		<li><a href="#start-minimized">Start Application Minimized</a></li>
+		<li><a href="#start-hidden">Start Application Hidden</a></li>
+	</ul>
+</aside>
+
+<article class="content-box nohighlight" id="#lowercase">
+	<h2>Filenames in This Directory to Lowercase</h2>
+	<code>REM Whatever directory you run this in will have all its files names converted to lowercase.
+for /F %%a in ('dir /L /B') do rename %%a %%a</code>
+</article>
+
+<article class="content-box nohighlight" id="#start-minimized">
+	<h2>Start Application Minimized</h2>
+	<code>REM Starts an application minimized.
+START /min "" "iexplore" google.com</code>
+</article>
+
+<article class="content-box nohighlight" id="#start-hidden">
+	<h2>Start Application Hidden</h2>
+	<code>' Starts an application hidden. If you wish to kill the task, you must do so through the task manager.
+' Note that this is VBScript. Not all applications allowed to be run hidden.
+Dim objShell
+Set objShell = WScript.CreateObject ("WScript.shell")
+objShell.run "mspaint", 0
+Set objShell = Nothing</code>
+</article>

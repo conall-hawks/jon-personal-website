@@ -286,6 +286,7 @@ input[type=text] {
 
 .content-box a:focus, .content-box a:hover {
 	text-decoration: underline;
+	text-shadow: 0 0 .5em;
 }
 
 .content-box img{
@@ -312,6 +313,7 @@ input[type=text] {
 }
 
 .content-box code {
+	font-size: 85%;
 	white-space: pre;
 }
 
@@ -330,7 +332,9 @@ input[type=text] {
 }
 
 .navbox td:first-of-type{
+	color: lime;
 	text-align: right;
+	width: 12%;
 }
 
 .navbox td:not(:last-of-type) {

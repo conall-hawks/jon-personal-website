@@ -138,30 +138,14 @@ function navbar(){
 /* #### AJAX Content Loader ################################################# */
 /* ########################################################################## */
 
-// Store the current state.
-var state = window.location.pathname + window.location.hash;
-
-// Change the URL when an AJAX link is clicked.
+// Change the Content when an AJAX link is clicked.
 $(document).on('click', '.ajax-link', function(event){
 	event.preventDefault();
-	// Change the URL and create history.
-	if(window.location.pathname !== this.pathname){
-		this.href = $(this).attr('href');
-		//history.pushState(null, null, this.href + this.hash);
-		setState(this.href);
-	}
+	if(window.location.pathname !== this.pathname) setState(this.href);
 });
-
-// Change the URL when the back button is clicked. Not sure why this needs to be wrapped in a function.
-window.onpopstate = function(){
-	if(window.location.pathname !== state.split('#')[0]){
-		setState(window.location.href + window.location.hash);
-	}
-};
 
 // Synchronize with a new state.
 function setState(link){
-	if(typeof setState.title === 'undefined') setState.title = document.title;
 	if(typeof setState.header === 'undefined') setState.header = $('.header-h2');
 	if(typeof setState.content === 'undefined') setState.content = $('.content');
 	
@@ -173,7 +157,6 @@ function setState(link){
 		setState.content.load(link, function(){
 			document.title = 'Jon Hawks';
 			setState.header.text('/' + link.split('/')[link.split('/').length - 1].replace('.html', ''));
-			state =  window.location.pathname + window.location.hash;
 			setState.header.css('opacity', 1);
 			setState.content.css('opacity', 1);
 			
@@ -247,4 +230,17 @@ function clock(){
 	if(clock.hours == 0) clock.hours = 12;
 	
 	return clock.hours + ':' + clock.minutes + ':' + clock.seconds + ' ' + clock.meridiem;
+}
+
+// Checks to see if link works (is 200 OK); colorizes and disables invalid links.
+$(document).ready(checkLinks);
+function checkLinks(){
+	checkLinks.link = $('a');
+	for(var i = 0; i < checkLinks.link.length; i++){
+		$.ajax({
+			url: checkLinks.link[i].href, type: 'HEAD', error: function(){
+				$(checkLinks.link[i]).attr('style', 'color: grey !important; cursor: default; pointer-events: none;');
+			}
+		});
+	}
 }

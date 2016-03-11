@@ -3,11 +3,16 @@
 	<ul>
 		<li><a href="#bin-gap">BinaryGap</a></li>
 		<li><a href="#count-div">CountDiv</a></li>
+		<li><a href="#frog-jmp">FrogJmp</a></li>
 		<li><a href="#min-avg">MinAvgTwoSlice</a></li>
+		<li><a href="#pass-car">PassingCars</a></li>
+		<li><a href="#perm-check">PermCheck</a></li>
+		<li><a href="#perm-miss-elem">PermMissingElem</a></li>
+		<li><a href="#tape-equ">TapeEquilibrium</a></li>
 	</ul>
 </aside>
 
-<article class="content-box" id="bin-gap">
+<article class="content-box cpp" id="bin-gap">
 	<h2>BinaryGap</h2>
 	<code>// Link to test: https://codility.com/demo/take-sample-test/binary_gap/
 // "Find longest sequence of zeros in binary representation of an integer."
@@ -37,8 +42,8 @@ int binary_gap(int N){
 }</code>
 </article>
 
-<article class="content-box" id="count-div">
-	<h2>BinaryGap</h2>
+<article class="content-box cpp" id="count-div">
+	<h2>CountDiv</h2>
 	<code>// Link to test: https://codility.com/demo/take-sample-test/count_div/
 // "Compute number of integers divisible by K in the range A to B."
 
@@ -47,13 +52,25 @@ int count_div(int A, int B, int K){
 }</code>
 </article>
 
-<article class="content-box" id="min-avg">
+<article class="content-box cpp" id="frog-jmp">
+	<h2>FrogJmp</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/frog_jmp/
+// "Count minimal number of jumps from position X to Y."
+
+int frog_jmp(int X, int Y, int D){
+    int jumps = (Y - X) / D;
+    if((Y - X) % D) jumps++;
+    return jumps;
+}</code>
+</article>
+
+<article class="content-box cpp" id="min-avg">
 	<h2>MinAvgTwoSlice</h2>
 	<code>// Link to test: https://codility.com/demo/take-sample-test/min_avg_two_slice/
 // "Find the minimal average of any slice containing at least two elements."
 
 // "100/100" solution. Only checks for slices of 2 and 3 elements (which is not noted in the description of problem).
-int min_avg_two_slice(vector&lt;int&gt; &A) {
+int min_avg_two_slice(vector&lt;int&gt; &A){
 	int size = A.size(), low_index = 0;
 	float low = (A[0] + A[1]) / 2, temp = 0;
  
@@ -77,5 +94,86 @@ int min_avg_two_slice(vector&lt;int&gt; &A) {
 	}
 	
 	return low_index;
+}</code>
+</article>
+
+<article class="content-box cpp" id="pass-car">
+	<h2>PassingCars</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/passing_cars/
+// "Count the number of passing cars on the road."
+
+// "100/100" solution. Always assumes the first car is headed east (which is not noted in the description of the problem).
+int passing_cars(vector&lt;int&gt; &A){
+    int east = 0, passing = 0;
+    for(int i = 0; i &lt; A.size(); i++){
+        if(A[i] == 0) east++;
+		if(A[i] != 0) passing += east;
+        if(passing &gt; 1000000000) return -1;
+    }
+    return passing;
+}
+
+// Correct solution based on description of problem given. Checks whether or not the first car is headed east or west (scores 90/100).
+int passing_cars(vector&lt;int&gt; &A){
+    int key_cars = 0, passing = 0;
+    for(int i = 0; i &lt; A.size(); i++){
+        if(A[i] == A[0]) key_cars++;
+		if(A[i] != A[0]) passing += key_cars;
+        if(passing &gt; 1000000000) return -1;
+    }
+    return passing;
+}</code>
+</article>
+
+<article class="content-box cpp" id="perm-check">
+	<h2>PermCheck</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/perm_check/
+// "Check whether array A is a permutation."
+
+// Relies heavily on &lt;algorithm&gt;, but scores 100/100. The for loop is range-based.
+#include &lt;algorithm&gt;
+int perm_check(vector&lt;int&gt; &A){
+    int t_num = (A.size() * (A.size() + 1)) / 2;
+	std::sort(A.begin(), A.end());
+	A.erase(std::unique(A.begin(), A.end()), A.end());
+    int sum = 0;
+    for(int n : A) sum += n;
+    if(t_num - sum == 0) return 1;
+    return 0;
+}</code>
+</article>
+
+<article class="content-box cpp" id="perm-miss-elem">
+	<h2>PermMissingElem</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/perm_missing_elem/
+// "Find the missing element in a given permutation."
+
+int perm_missing_elem(vector&lt;int&gt; &A){
+	int total = 0;
+	int max = 0;
+	for(int i = 0; i &lt; A.size(); i++) total = total + A[i];
+	for(int i = 1; i &lt;= A.size() + 1; i++) max = max + i;
+	return max - total;
+}</code>
+</article>
+
+<article class="content-box cpp" id="tape-equ">
+	<h2>TapeEquilibrium</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/tape_equilibrium/
+// "Minimize the value |(A[0] + ... + A[P-1]) - (A[P] + ... + A[N-1])|."
+
+int tape_equilibrium(vector&lt;int&gt; &A) {
+    int left = A[0];
+	int right = 0;
+    for(int i = 1; i &lt; A.size(); i++) right += A[i];
+	int minimum = abs(left - right);
+    int difference = minimum;
+    for(int i = 1; i &lt; A.size() - 1; i++){
+		left += A[i];
+		right -= A[i];
+        difference = abs(left - right);
+        if(difference &lt; minimum) minimum = difference;
+    }
+    return minimum;
 }</code>
 </article>

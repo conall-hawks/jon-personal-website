@@ -1,0 +1,56 @@
+<aside class="content-nav">
+	<h2>Sections</h2>
+	<ul>
+		<li><a href="#position-iframe">Positionable Iframe</a></li>
+		<li><a href="#script-fallback">Remote Script Fallback</a></li>
+	</ul>
+</aside>
+
+<article class="content-box html" id="position-iframe">
+	<h2>Positionable Iframe</h2>
+	<code>&lt;!-- A way to scroll to content inside of an iframe, regardless of cross-domain restrictions. --&gt;
+&lt;!-- References: http://www.stoimen.com/blog/2011/03/29/scroll-an-iframe-content-to-a-predefined-position/ --&gt;
+
+&lt;div style="background: white; height: 500px; overflow: hidden; position: relative; width: 100%;"&gt;
+	&lt;iframe src="http://www.proxy4free.com/list/webproxy_rating1.html#top_r" style="left: -60px; position: absolute; top: -310px; height: 1024px; width: 100%;" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"&gt;
+		You need a Frames Capable browser to view this content.
+	&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;!--
+	The notable code creating the effect is the embedded css, which if written out would be:
+	
+	div {
+		height: 500px; 
+		overflow: hidden; 
+		position: relative; 
+		width: 100%;
+	}
+	
+	iframe {
+		left: -60px;
+		position: absolute;
+		top: -310px;
+		height: 1024px;
+		width: 100%;
+	}
+--&gt;</code>
+</article>
+
+<article class="content-box html" id="script-fallback">
+	<h2>Remote Script Fallback</h2>
+	<code>&lt;!-- Fallbacks for remotely hosted scripts, you can NOT use asynchronous requests with this (i.e. &lt;script async>). --&gt;
+&lt;!-- Checks for existence of any variable/function a script defines, if undefined then loads a local copy. --&gt;
+&lt;!-- Reference: https://stackoverflow.com/questions/5257923 --&gt;
+
+&lt;!-- jQuery --&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;window.jQuery || document.write('&lt;script src="/includes/jquery.js"&gt;&lt;\/script&gt;')&lt;/script&gt;
+
+&lt;!-- Throttle Debounce --&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;window.$.throttle || document.write('&lt;script src="/includes/throttle-debounce.js"&gt;&lt;\/script&gt;')&lt;/script&gt;
+
+&lt;!-- Modernizr --&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;window.Modernizr || document.write('&lt;script src="/includes/modernizr.js"&gt;&lt;\/script&gt;')&lt;/script&gt;</code>
+</article>

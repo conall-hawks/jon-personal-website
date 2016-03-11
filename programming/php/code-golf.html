@@ -1,0 +1,193 @@
+<aside class="content-nav">
+	<h2>Sections</h2>
+	<ul>
+		<li><a href="#bin-gap">BinaryGap</a></li>
+		<li><a href="#cyc-rotate">CyclicRotation</a></li>
+		<li><a href="#frog-jmp">FrogJmp</a></li>
+		<li><a href="#genome-range">GenomicRangeQuery</a></li>
+		<li><a href="#min-avg">MinAvgTwoSlice</a></li>
+		<li><a href="#odd-array">OddOccurrencesInArray</a></li>
+		<li><a href="#pass-car">PassingCars</a></li>
+		<li><a href="#perm-miss-elem">PermMissingElem</a></li>
+		<li><a href="#tape-equ">TapeEquilibrium</a></li>
+	</ul>
+</aside>
+
+<article class="content-box php" id="bin-gap">
+	<h2>BinaryGap</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/binary_gap/
+// "Find longest sequence of zeros in binary representation of an integer."
+
+function binary_gap($N){
+	$N = (string)decbin($N);
+	$gap = $highest = $mark = 0;
+	for($i = 0; $i &lt; strlen($N); $i++){
+		if($N[$i] == 1){
+			$gap = $i - $mark;
+			$mark = $i;
+			if($gap > $highest) $highest = $gap - 1;
+		}
+	}
+	return (int)$highest;
+}</code>
+</article>
+
+<article class="content-box php" id="cyc-rotate">
+	<h2>CyclicRotation</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/cyclic_rotation/
+// "Rotate an array to the right by a given number of steps."
+
+function solution($A, $K){
+    if(empty($A)) return $A;
+    for($K; $K > 0; $K--){
+        $temp = array_pop($A);
+        array_unshift($A, $temp);
+    }
+    return $A;
+}</code>
+</article>
+
+<article class="content-box php" id="frog-jmp">
+	<h2>FrogJmp</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/frog_jmp/
+// "Count minimal number of jumps from position X to Y."
+
+function frog_jmp($X, $Y, $D){
+    $temp = intval(($Y - $X) / $D);
+    if(($Y - $X) % $D) $temp++;
+    return $temp;
+}</code>
+</article>
+
+<article class="content-box php" id="genome-range">
+	<h2>GenomicRangeQuery</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/genomic_range_query/
+// "Count minimal number of jumps from position X to Y."
+
+function genomic_range_query($S, $P, $Q) {
+    for($i = 0; $i &lt; sizeof($P);$i++){
+        $temp = substr($S, $P[$i], $Q[$i] - $P[$i] + 1);
+        if(strpos($temp, 'A') !== false){
+            $min[$i] = 1;
+        }elseif(strpos($temp, 'C') !== false){
+            $min[$i] = 2;
+        }elseif(strpos($temp, 'G') !== false){
+            $min[$i] = 3;
+        }elseif(strpos($temp, 'T') !== false){
+            $min[$i] = 4;
+        }
+    }
+    return $min;
+}</code>
+</article>
+
+<article class="content-box php" id="min-avg">
+	<h2>MinAvgTwoSlice</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/min_avg_two_slice/
+// "Find the minimal average of any slice containing at least two elements."
+
+// "100/100" solution. Only checks for slices of 2 and 3 elements (which is not noted in the description of problem).
+function min_avg_two_slice($A){
+    $avg_2 = $avg_3 = $min_avg = $min_index = NULL;
+    for($i = 0; $i &lt; sizeof($A); $i++){
+		if(!isset($A[$i + 1])) break;
+        $avg_2 = ($A[$i] + $A[$i + 1]) / 2;
+		if($avg_2 &lt; $min_avg || $min_avg === NULL){
+            $min_avg = $avg_2;
+            $min_index = $i;
+        }
+		if(!isset($A[$i + 2])) break;
+        $avg_3 = ($A[$i] + $A[$i + 1] + $A[$i + 2]) / 3;
+		if($avg_3 &lt; $min_avg || $min_avg === NULL){
+            $min_avg = $avg_3;
+            $min_index = $i;
+        }
+	}
+    return $min_index;
+}
+
+// Correct solution based on description of problem given (fails performance tests though). This will check for 2 or more elements (all possibilities).
+function min_avg_two_slice($A){
+    $size = sizeof($A);
+    $min_avg = $min_index = NULL;
+    for($i = 0; $i &lt; $size; $i++){
+		for($j = 1; $j &lt; $size - $i; $j++){
+			$avg = array_sum(array_slice($A, $i, $j + 1)) / ($j + 1);
+			if($avg &lt; $min_avg || $min_avg === NULL){
+                $min_avg = $avg;
+                $min_index = $i;
+            }
+		}
+	}
+    return $min_index;
+}</code>
+</article>
+
+<article class="content-box php" id="odd-array">
+	<h2>OddOccurrencesInArray</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/odd_occurrences_in_array/
+// "Find value that occurs in odd number of elements."
+
+function odd_occurrences_in_array($A){
+    $A = array_count_values($A);
+    foreach($A as $key => $num) if($num % 2 != 0) return $key;
+}</code>
+</article>
+
+<article class="content-box php" id="pass-car">
+	<h2>PassingCars</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/passing_cars/
+// "Count the number of passing cars on the road."
+
+// "100/100" solution. Always assumes the first car is headed east (which is not noted in the description of the problem).
+function passing_cars($A){
+	$east = $passing = 0;
+	for($i = 0; $i &lt; count($A); $i++){
+		if($A[$i] == 0) $east++;
+		if($A[$i] != 0) $passing += $east;
+		if($passing > 1000000000) return -1;
+	}
+	return $passing;
+}
+
+// Correct solution based on description of problem given. Checks whether or not the first car is headed east or west (scores 90/100).
+function passing_cars($A){
+	$key_cars = $passing = 0;
+	for($i = 0; $i &lt; count($A); $i++){
+		if($A[$i] == $A[0]) $key_cars++;
+		if($A[$i] != $A[0]) $passing += $key_cars;
+		if($passing > 1000000000) return -1;
+	}
+	return $passing;
+}</code>
+</article>
+
+<article class="content-box php" id="perm-miss-elem">
+	<h2>PermMissingElem</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/perm_missing_elem/
+// "Find the missing element in a given permutation."
+
+function perm_missing_elem($A){
+    return (((sizeof($A) + 1) * (sizeof($A) + 2)) / 2) - array_sum($A);
+}</code>
+</article>
+
+<article class="content-box php" id="tape-equ">
+	<h2>TapeEquilibrium</h2>
+	<code>// Link to test: https://codility.com/demo/take-sample-test/tape_equilibrium/
+// "Minimize the value |(A[0] + ... + A[P-1]) - (A[P] + ... + A[N-1])|."
+
+function tape_equilibrium($A) {
+    $left = $A[0];
+    $right = array_sum($A) - $left;
+    $minimum = abs($left - $right);
+    for($i = 1; $i &lt; sizeof($A) - 1; $i++){
+        $left += $A[$i];
+        $right -= $A[$i];
+        $difference = abs($left - $right);
+        if($difference &lt; $minimum) $minimum = $difference;
+    }
+    return $minimum;
+}
+</code>
+</article>

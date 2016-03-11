@@ -1,33 +1,69 @@
 <aside class="content-nav">
 	<h2>Sections</h2>
 	<ul>
-		<li><a href="#hello-world">Hello World MsgBox</a></li>
+		<li><a href="#pointer-param">Call By Value Pointer Parameter</a></li>
+		<li><a href="#dissect-address">Dissect Mailing Address</a></li>
 	</ul>
 </aside>
 
-<article class="content-box" id="hello-world">
+<article class="content-box cpp" id="pointer-param">
 	<h2>Call By Value Pointer Parameter</h2>
-	<code>// Demonstrates the way call-by-value parameters behave with pointer arguments.
-#include \<iostream\>
-
-// Some people prefer to use an alias for pointers. However this example will not.
-typedef int* IntPointer;
-
+	<code>// Demonstrates call-by-value parameter behavior with a pointer argument.
+#include &lt;iostream&gt;
 void sneaky(int *temp);
 
 int main(){
-	int *p;
-	p = new int(77);
-	
-	std::cout << "Before call to function:   *p == " << *p << std::endl;
+	int *p = new int(101);
+	std::cout &lt;&lt; "Before function call:     *p == " &lt;&lt; *p &lt;&lt; std::endl;
 	sneaky(p);
-	std::cout << "After call to function:    *p == " << *p << std::endl;
-	
+	std::cout &lt;&lt; "After function call:      *p == " &lt;&lt; *p &lt;&lt; std::endl;
 	return 0;
 }
 
 void sneaky(int *temp){
-	*temp = 99;
-	std::cout << "Inside the function call:  *temp == " << *temp << std::endl;
+	*temp = 1337;
+	std::cout &lt;&lt; "Inside the function call: *temp == " &lt;&lt; *temp &lt;&lt; std::endl;
+}</code>
+</article>
+
+<article class="content-box cpp" id="dissect-address">
+	<h2>Dissect Mailing Address</h2>
+	<code>// An example of how to split strings without regex.
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;cctype&gt;
+
+int main(){
+	std::string a = "", s = "", c = "", p = "", z = "";
+	std::cout &lt;&lt; "Enter an address (or just hit enter): (format: 313 Blah Street, New York NY 90210)\n";
+	getline(std::cin, a);
+	if(a.empty()) a = "313 Blah Street, New York NY 90210";
+	do{
+		// Find the street.
+		for(int i = 0; i &lt; a.size(); i++){
+			if(a[i] == ',' && s.empty()){
+			s = a.substr(0, i);
+			a.erase(0, i + 2);
+			}
+		}
+		// Find the city.
+		for(int i = 0; i &lt; a.size(); i++){
+			if(isupper(a[i]) && isupper(a[i + 1]) && isspace(a[i + 2])){
+				c = a.substr(0, i - 1);
+				a.erase(0, i);
+			}
+		}
+		// Find the state.
+		p = a.substr(0, 2);
+		a.erase(0, 3);
+		
+		// Find the zip.
+		z = a;
+		a = "";
+	}while(!a.empty());
+	std::cout &lt;&lt; "Street: " &lt;&lt; s &lt;&lt; std::endl;
+	std::cout &lt;&lt; "City:   " &lt;&lt; c &lt;&lt; std::endl;
+	std::cout &lt;&lt; "State:  " &lt;&lt; p &lt;&lt; std::endl;
+	std::cout &lt;&lt; "Zip:    " &lt;&lt; z &lt;&lt; std::endl;
 }</code>
 </article>

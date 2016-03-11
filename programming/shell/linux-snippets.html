@@ -1,0 +1,19 @@
+<aside class="content-nav">
+	<h2>Sections</h2>
+	<ul>
+		<li><a href="#idem-copy">Idempodent Recursive Copy</a></li>
+		<li><a href="#lock-pc">Lock PC</a></li>
+	</ul>
+</aside>
+
+<article class="content-box bash" id="idem-copy">
+	<h2>Idempodent Recursive Copy</h2>
+	<code># Will copy the file 'test.xml' recursively.
+echo ./fs*/* | xargs -n 1 cp test.xml</code>
+</article>
+
+<article class="content-box bash" id="lock-pc">
+	<h2>Lock PC</h2>
+	<code># Kinda like that lock button on your phone/tablet.
+while [ "$(date)" != "Sat Oct 31 16:00:00 EDT 2015" ]; do \ > sleep 1; done</code>
+</article>

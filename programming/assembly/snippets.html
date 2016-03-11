@@ -7,12 +7,11 @@
 
 <article class="content-box" id="win32-msg">
 	<h2>Win32 MessageBox</h2>
-	<code class="asm">include 'win32ax.inc'
-
+	<code class="asm">; Draws a Windows MessageBox using FASM macros. Requires FASM.
+include 'win32ax.inc'
 .code
 	start:
 		invoke	MessageBox, HWND_DESKTOP, "Hello world.", invoke GetCommandLine, MB_OK
 		invoke	ExitProcess, 0
 	.end start</code>
-<p>Draws a Windows MessageBox using FASM macros. Requires FASM.</p>
 </article>

@@ -1,0 +1,100 @@
+<aside class="content-nav">
+	<h2>Sections</h2>
+	<ul>
+		<li><a href="#title-case">Title Case</a></li>
+		<li><a href="#linkify">URL to Link</a></li>
+		<li><a href="#array-organize">User-Defined Array Organization</a></li>
+	</ul>
+</aside>
+
+<article class="content-box php" id="title-case">
+	<h2>Title Case</h2>
+	<code>/* 
+ * Converts to "Title Case". There's lots of prepositions so only the most common 25 are listed here. Add more as needed.
+ * 
+ * An example of usage:
+ * 		$title = "tHe quiCK broWn FoX writes some PhP and goes agaINst apple'S wishes as he JAILbreaks His IphoNE'S ios";
+ * 		echo title($title);
+ * Result:
+ * 		The Quick Brown Fox Writes some PHP and Goes against Apple's Wishes as He Jailbreaks His iPhone's iOS
+ * 
+ * @param	$title	string:	A string to be turned into a title.
+ * @return		string:	The string in "Title Case".
+ * 
+ */
+function title($title){
+	$title = strtolower($title);
+	
+	// Lowercase words in titles.
+	$articles = array('a', 'an', 'the', 'some');
+	$prepositions = array('of', 'in', 'to', 'for', 'with', 'on', 'at', 'from', 'by', 'about', 'as', 'into', 'like', 'through', 'after', 'over', 'between', 'out', 'against', 'during', 'without', 'before', 'under', 'around', 'among');
+	$conjunctions = array('and', 'but', 'for', 'nor', 'or', 'so', 'yet');
+	$lcwords = array_merge($articles, $prepositions, $conjunctions);
+	
+	// Title case iterator.
+	$words = explode(' ', $title);
+	$words = explode('-', $title);
+	foreach($words as $i => $word) if($i == 0 or !in_array($word, $lcwords)) $words[$i] = ucwords($word);
+	$title = implode(' ', $words);
+	
+	// Special words to look for.
+	$special = array('HTML', 'iOS', 'iPhone', 'JavaScript', 'MySQL', 'PHP', 'RegEx');
+	$title = str_ireplace($special, $special, $title);
+	
+	return $title;
+}</code>
+</article>
+
+<article class="content-box php" id="linkify">
+	<h2>URL to Link</h2>
+	<code>/*
+ * Reads a string and turns URLs into &lt;a&gt;&lt;/a&gt; HTML tags that you can click on.
+ * 
+ * @param	$string	string:	A string possibly containing links.
+ * @return			string:	The string with HTML tags wrapped around links.
+ */
+function linkify($string){
+	$string = preg_replace('!(((f|ht)tp(s)?://)[-a-zA-Z?-??-?()0-9@:%\!_+.,~#?&;//=]+)!i', '&lt;a href="$1" target="_blank"&gt;$1&lt;/a&gt;', $string);
+	$string = preg_replace('/\(\&lt;a href\=\"(.*)\)"\ target\=\"\_blank\"&gt;(.*)\)\&lt;\/a&gt;/i', '(&lt;a href="$1" target="_blank"&gt;$2&lt;/a&gt;)', $string);
+	$string = preg_replace('/\&lt;a href\=\"(.*)\."\ target\=\"\_blank\"&gt;(.*)\.\&lt;\/a&gt;/i', '&lt;a href="$1" target="_blank"&gt;$2&lt;/a&gt;.', $string);
+	$string = preg_replace('/\&lt;a href\=\"(.*)\,"\ target\=\"\_blank\"&gt;(.*)\,\&lt;\/a&gt;/i', '&lt;a href="$1" target="_blank"&gt;$2&lt;/a&gt;,', $string);
+	return $string;
+}</code>
+</article>
+
+<article class="content-box php" id="array-organize">
+	<h2>User-Defined Array Organization</h2>
+	<code>/* 
+ * Orders an array based on user-defined strings.
+ * 
+ * An example of usage:
+ *     $array = array('about', 'forum', 'images', 'index', 'news', 'privacy', 'videos');
+ *     $order = array('index', 'news', 'images', 'videos', 'forum');
+ *     $result = sortify($array, $order);
+ *     print_r($result);
+ * Result: 
+ *     Array([0]=>index [1]=>news [2]=>images [3]=>videos [4]=>forum [5]=>privacy [6]=>about)
+ * 
+ * An example of sorting a glob:
+ *     $nav_list = sortify(glob('views/navigation/*.php'), array('index', 'news', 'images', 'videos', 'forum'));
+ * 
+ * @param	$array	array: The array that will be reordered. 
+ * @param	$order	array: The items to reorder, listed first-to-last.
+ * @return 		array: The $array reordered according to $order.
+ * 
+ */
+function sortify($array, $order){
+	foreach($order as $oldkey => $needle){
+		foreach($array as $newkey => $haystack){
+			// In case we're sorting globs.
+			$haystack = pathinfo($haystack, PATHINFO_FILENAME);
+			if($haystack == $needle){
+				$temp = $array[$oldkey];
+				$array[$oldkey] = $array[$newkey];
+				$array[$newkey] = $temp;
+			}
+		}
+	}
+	return $array;
+}</code>
+</article>
