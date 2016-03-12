@@ -31,11 +31,6 @@
 		<script>window.$.throttle || document.write('<script src="misc/throttle-debounce.js"><\/script>')</script>
 		<script>window.Modernizr || document.write('<script src="misc/modernizr.js"><\/script>')</script>
 		
-		<!--Page fade-in. Putting this in the head gives a more desirable effect. -->
-		<style>body {opacity: 0; transition: 3s opacity; visibility: hidden;}</style>
-		<script>$(document).ready(function(){setTimeout(function(){$('body').css({'opacity': 1, 'visibility': 'visible'})}, 200)});</script>
-		<noscript><style>body {opacity: 1; visibility: visible;}</style></noscript>
-		
 		<!-- Syntax Highlighting. -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/sunburst.min.css" rel="stylesheet" />
 		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>

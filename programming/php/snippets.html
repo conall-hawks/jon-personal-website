@@ -51,7 +51,7 @@ function title($title){
  * Reads a string and turns URLs into &lt;a&gt;&lt;/a&gt; HTML tags that you can click on.
  * 
  * @param	$string	string:	A string possibly containing links.
- * @return			string:	The string with HTML tags wrapped around links.
+ * @return		string:	The string with HTML tags wrapped around links.
  */
 function linkify($string){
 	$string = preg_replace('!(((f|ht)tp(s)?://)[-a-zA-Z?-??-?()0-9@:%\!_+.,~#?&;//=]+)!i', '&lt;a href="$1" target="_blank"&gt;$1&lt;/a&gt;', $string);

@@ -57,13 +57,15 @@ $(document).ready(function(){
 	setTimeout(function(){element.removeAttr('style')}, time + delay);
 });
 
-// Aside left slide-in.
-$(document).ready(function(){
+// Aside left slide.
+$(document).ready(contentNavSlideIn);
+function contentNavSlideIn(){
 	var element = $('.content-nav, .left-box, .left-box2');
 	var delay = 800;
 	var time = 1000;
 	element.css('left', '-100%');
-	element.css('transition', time + 'ms');
+	element.css('opacity', 0);
+	element.css('transition', time + 'ms all, 2.5s opacity');
 	element.each(function(index){
 		setTimeout(function(){
 			if(element[index].className.search('content-nav') > -1){
@@ -72,29 +74,26 @@ $(document).ready(function(){
 			}else{
 				$(element[index]).css('left', 0);
 			}
+			$(element[index]).css('opacity', 1);
 		}, delay);
 		delay += 100;
 	});
-	setTimeout(function(){element.removeAttr('style')}, time + delay);
-});
-
-// Aside right slide-in.
-$(document).ready(function(){
-	var element = $('.right-box, .right-box2');
-	var delay = 800;
+}
+function contentNavSlideOut(){
+	var element = $('.content-nav, .left-box, .left-box2');
+	var delay = 1;
 	var time = 1000;
-	element.css('right', '-100%');
-	element.css('transition', time + 'ms');
+	element.css('transition', time + 'ms all, .25s opacity');
 	element.each(function(index){
 		setTimeout(function(){
-			$(element[index]).css('right', 0);
+			$(element[index]).css('left', '-100%');
+			$(element[index]).css('opacity', 0);
 		}, delay);
-		delay += 100;
+		delay +=50;
 	});
-	setTimeout(function(){element.removeAttr('style')}, time + delay);
-});
+}
 
-// Content slide-in.
+// Content slide.
 $(document).ready(contentSlideIn);
 function contentSlideIn(){
 	var element = $('.content-box');
@@ -103,10 +102,25 @@ function contentSlideIn(){
 	element.each(function(index){
 		$(element[index]).css('left', index % 2 ? '-500%' : '500%');
 	});
-	element.css('transition', time + 'ms');
+	element.css('opacity', 0);
+	element.css('transition', time + 'ms all, 2.5s opacity');
 	element.each(function(index){
 		setTimeout(function(){
 			$(element[index]).css('left', 0);
+			$(element[index]).css('opacity', 1);
+		}, delay);
+		delay +=50;
+	});
+}
+function contentSlideOut(){
+	var element = $('.content-box');
+	var delay = 1;
+	var time = 1000;
+	element.css('transition', time + 'ms all, .25s opacity');
+	element.each(function(index){
+		setTimeout(function(){
+			$(element[index]).css('left', index % 2 ? '-500%' : '500%');
+			$(element[index]).css('opacity', 0);
 		}, delay);
 		delay +=50;
 	});
@@ -149,16 +163,18 @@ function setState(link){
 	if(typeof setState.header === 'undefined') setState.header = $('.header-h2');
 	if(typeof setState.content === 'undefined') setState.content = $('.content');
 	
+	contentNavSlideOut();
+	contentSlideOut();
 	document.title = 'Jon Hawks \u2622 Loading...';
 	setState.header.text('Loading...');
-	setState.header.css({'opacity': .25, 'transition': '1s opacity'});
-	setState.content.css({'opacity': 0, 'transition': '1s opacity'});
+	setState.header.css({'opacity': .25, 'transition': '.5s opacity'});
 	setTimeout(function(){
 		setState.content.load(link, function(){
+			contentNavSlideIn();
+			contentSlideIn();
 			document.title = 'Jon Hawks';
 			setState.header.text('/' + link.split('/')[link.split('/').length - 1].replace('.html', ''));
 			setState.header.css('opacity', 1);
-			setState.content.css('opacity', 1);
 			
 			// Code highlighting.
 			$('code').each(function(i, block){hljs.highlightBlock(block);});

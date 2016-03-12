@@ -11,6 +11,7 @@
 
 /* Skyblue-on-grey tweed design. */
 body {
+	animation: fade-in 4s;
 	background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgogIDxwYXRoIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6LjU7c3Ryb2tlLW9wYWNpdHk6LjI1IiBkPSJNIDAsMCA0LDQgTSAwLDQgNCwwIi8+Cjwvc3ZnPg==") repeat fixed center / 4px auto rgb(12, 12, 16);
 	color: skyblue;
 	font-family: serif;
@@ -28,14 +29,14 @@ input[type=text] {
 }
 
 /* Colors. */
-.black	{ color: black !important;	text-shadow: 0 0 .125em; }
-.white	{ color: white !important;	text-shadow: 0 0 .125em; }
-.red	{ color: red !important;	text-shadow: 0 0 .125em; }
-.orange	{ color: orange !important;	text-shadow: 0 0 .125em; }
-.green	{ color: green !important;	text-shadow: 0 0 .125em; }
-.lime	{ color: lime !important;	text-shadow: 0 0 .125em; }
-.blue	{ color: blue !important;	text-shadow: 0 0 .125em; }
-.purple	{ color: purple !important;	text-shadow: 0 0 .125em; }
+.black	{ color: black !important;	text-shadow: 0 0 .0625em; }
+.white	{ color: white !important;	text-shadow: 0 0 .0625em; }
+.red	{ color: red !important;	text-shadow: 0 0 .0625em; }
+.orange	{ color: orange !important;	text-shadow: 0 0 .0625em; }
+.green	{ color: green !important;	text-shadow: 0 0 .0625em; }
+.lime	{ color: lime !important;	text-shadow: 0 0 .0625em; }
+.blue	{ color: blue !important;	text-shadow: 0 0 .0625em; }
+.purple	{ color: purple !important;	text-shadow: 0 0 .0625em; }
 
 /* Text highlighting. */
 ::selection {
@@ -67,6 +68,22 @@ input[type=text] {
 	60%{transform: skew(-360deg);}
 	80%{transform: skew(360deg);}
 	100%{transform: skew(-360deg);}
+}
+
+@keyframes fade-in {
+	0%   {opacity: 0;}
+	100% {opacity: 1;}
+}
+
+@keyframes image-slide {
+	0%{left:-0%}
+	14.88%{left:-0%}
+	25%{left:-100%}
+	39.88%{left:-100%}
+	50%{left:-200%}
+	64.88%{left:-200%}
+	75%{left:-300%}
+	89.88%{left:-300%}
 }
 
 /* ########################################################################## */
@@ -392,12 +409,12 @@ input[type=text] {
 }
 
 .left-box ul, .content-nav ul{
-	color: lime;
+	color: blue;
 	font-size: 95%;
 	font-size: 1.2vw;
 	list-style: none;
 	padding: 2.5%;
-	text-shadow: 0 0 1em blue;
+	text-shadow: 0 0 .125em;
 	white-space: nowrap;
 }
 
@@ -410,7 +427,7 @@ input[type=text] {
 }
 
 .left-box a, .content-nav a{
-	color: blue;
+	color: lime;
 	text-decoration: none;
 }
 
