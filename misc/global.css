@@ -120,7 +120,7 @@ input[type=text] {
 	width: 16.67%;
 	z-index: 1;
 }
-@keyframes header-logo-slide { 0% { left: 100% } 30% { left: 100% }}
+@keyframes header-logo-slide { 0% { left: -100% } 30% { left: -100% }}
 
 .header-box, .navbar-box {
 	animation: header-box-slide 1.45s;
@@ -234,13 +234,6 @@ input[type=text] {
 	text-shadow: none;
 }
 
-.katamari {
-	background-image: url("katamari/katamari-damacy/prince.gif"), url("katamari/beautiful-katamari/harvest.gif"), url("katamari/katamari-damacy/miso.gif"), url("katamari/me-&-my-katamari/mu.gif"), url("katamari/we-love-katamari/kinoko.gif");
-	background-position: 0%, 25%, 50%, 75%, 100%;
-	background-repeat: no-repeat;
-	background-size: 20% 100%;
-}
-
 /* ########################################################################## */
 /* #### Navbar ############################################################## */
 /* ########################################################################## */
@@ -297,6 +290,7 @@ input[type=text] {
 	margin: 0 0 25px;
 	opacity: 1;
 	position: relative;
+	transition: all .5s, opacity .25s;
 	width: 121.5%;
 }
 .content-box:nth-of-type(odd){
@@ -439,6 +433,7 @@ input[type=text] {
 	left: -25%;
 	opacity: 1;
 	top: 0;
+	transition: all 1s, opacity .25s;
 	width: 22%;
 	z-index: 1;
 }

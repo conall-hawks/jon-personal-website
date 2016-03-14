@@ -10,8 +10,7 @@ function contentSlider(){
 	var top = contentSlider.window.scrollTop();
 	var height = contentSlider.window.height();
 	var fraction = top + height * .9;
-	var element = $('.content-box:not(:first-of-type)');
-	element.css('transition', '.5s all, .25s opacity');
+	var element = $('.content-box:not(:first-of-type)');//possible filter(): if already in viewport don't select? would remove dependency in ajax callback
 	element.each(function(index){
 		if($(element[index]).offset().top > fraction){
 			$(element[index]).css('transition', '.5s all, .25s opacity');
@@ -42,23 +41,17 @@ $(document).ready(function(){
 });
 
 function asideSlideOut(){
-	var element = $('.content-nav, .left-box, .left-box2');
-	element.css('transition', '1s all, .25s opacity');
-	element.each(function(index){
-		$(element[index]).css('left', '-100%');
-		$(element[index]).css('opacity', 0);
-	});
+	var element = $('.content-nav, .left-box');
+	element.css('left', '-100%');
+	element.css('opacity', 0);
 }
 
 function contentSlideOut(){
 	var element = $('.content-box');
-	element.css('transition', '.5s all, .25s opacity');
-	setTimeout(function(){
-		element.each(function(index){
-			$(element[index]).css('left', (index % 2 ? '-150%' : '150%'));
-			$(element[index]).css('opacity', 0);
-		});
-	}, 1);
+	element.each(function(index){
+		$(element[index]).css('left', (index % 2 ? '-150%' : '150%'));
+		$(element[index]).css('opacity', 0);
+	});
 }
 
 /* ########################################################################## */
