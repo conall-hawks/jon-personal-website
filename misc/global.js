@@ -2,44 +2,27 @@
 /* #### Fancy Page Loading ################################################## */
 /* ########################################################################## */
 
-// Header slide-in.
-$(document).ready(function(){
-	var element = $('.header');
-	var delay = 100;
-	var time = 1000;
-	element.css('left', '100%');
-	element.css('transition', time + 'ms');
-	setTimeout(function(){
-		element.css('left', 0);
-	}, delay);
-	setTimeout(function(){element.removeAttr('style')}, time + delay);
-});
-
-// Logo slide-in.
-$(document).ready(function(){
-	var element = $('.header-logo');
-	var delay = 300;
-	var time = 1000;
-	element.css('left', '100%');
-	element.css('transition', time + 'ms');
-	setTimeout(function(){
-		element.css('left', 0);
-	}, delay);
-	setTimeout(function(){element.removeAttr('style')}, time + delay);
-});
-
-// Header box slide-in.
-$(document).ready(function(){
-	var element = $('.header-box');
-	var delay = 450;
-	var time = 1000;
-	element.css('left', '100%');
-	element.css('transition', time + 'ms');
-	setTimeout(function(){
-		element.css('left', '16.67%');
-	}, delay);
-	setTimeout(function(){element.removeAttr('style')}, time + delay);
-});
+// Throttle prevents lag.
+$(window).scroll($.throttle(100, contentSlider));
+$(window).resize(contentSlider);
+function contentSlider(){
+	var top = $(scroll).scrollTop();
+	var height = $(window).height();
+	var fraction = top + height * .9;
+	var element = $('.content-box:not(:first-of-type)');
+	element.css('transition', '.5s all, .25s opacity');
+	element.each(function(index){
+		if($(element[index]).offset().top > fraction){
+			$(element[index]).css('transition', '.5s all, .25s opacity');
+			$(element[index]).css('left', (index % 2 ? '150%' : '-150%'));
+			$(element[index]).css('opacity', 0);
+		}else{
+			$(element[index]).css('transition', '1s all, 1.15s opacity');
+			$(element[index]).css('left', '0%');
+			$(element[index]).css('opacity', 1);
+		}
+	});
+}
 
 // Header box cells slide-in.
 $(document).ready(function(){
@@ -57,72 +40,21 @@ $(document).ready(function(){
 	setTimeout(function(){element.removeAttr('style')}, time + delay);
 });
 
-// Aside left slide.
-$(document).ready(contentNavSlideIn);
-function contentNavSlideIn(){
+function asideSlideOut(){
 	var element = $('.content-nav, .left-box, .left-box2');
-	var delay = 800;
-	var time = 1000;
-	element.css('left', '-100%');
-	element.css('opacity', 0);
-	element.css('transition', time + 'ms all, 2.5s opacity');
+	element.css('transition', '1s all, .25s opacity');
 	element.each(function(index){
-		setTimeout(function(){
-			if(element[index].className.search('content-nav') > -1){
-				$(element[index]).css('left', '-25%');
-				$('.left-box').css('display', 'none');
-			}else{
-				$(element[index]).css('left', 0);
-			}
-			$(element[index]).css('opacity', 1);
-		}, delay);
-		delay += 100;
-	});
-}
-function contentNavSlideOut(){
-	var element = $('.content-nav, .left-box, .left-box2');
-	var delay = 1;
-	var time = 1000;
-	element.css('transition', time + 'ms all, .25s opacity');
-	element.each(function(index){
-		setTimeout(function(){
-			$(element[index]).css('left', '-100%');
-			$(element[index]).css('opacity', 0);
-		}, delay);
-		delay +=50;
+		$(element[index]).css('left', '-100%');
+		$(element[index]).css('opacity', 0);
 	});
 }
 
-// Content slide.
-$(document).ready(contentSlideIn);
-function contentSlideIn(){
-	var element = $('.content-box');
-	var delay = 50;
-	var time = 1000;
-	element.each(function(index){
-		$(element[index]).css('left', index % 2 ? '-500%' : '500%');
-	});
-	element.css('opacity', 0);
-	element.css('transition', time + 'ms all, 2.5s opacity');
-	element.each(function(index){
-		setTimeout(function(){
-			$(element[index]).css('left', 0);
-			$(element[index]).css('opacity', 1);
-		}, delay);
-		delay +=50;
-	});
-}
 function contentSlideOut(){
 	var element = $('.content-box');
-	var delay = 1;
-	var time = 1000;
-	element.css('transition', time + 'ms all, .25s opacity');
+	element.css('transition', '.5s all, .25s opacity');
 	element.each(function(index){
-		setTimeout(function(){
-			$(element[index]).css('left', index % 2 ? '-500%' : '500%');
-			$(element[index]).css('opacity', 0);
-		}, delay);
-		delay +=50;
+		$(element[index]).css('left', index % 2 ? '-150%' : '150%');
+		$(element[index]).css('opacity', 0);
 	});
 }
 
@@ -163,15 +95,14 @@ function setState(link){
 	if(typeof setState.header === 'undefined') setState.header = $('.header-h2');
 	if(typeof setState.content === 'undefined') setState.content = $('.content');
 	
-	contentNavSlideOut();
+	asideSlideOut();
 	contentSlideOut();
 	document.title = 'Jon Hawks \u2622 Loading...';
 	setState.header.text('Loading...');
 	setState.header.css({'opacity': .25, 'transition': '.5s opacity'});
 	setTimeout(function(){
 		setState.content.load(link, function(){
-			contentNavSlideIn();
-			contentSlideIn();
+			contentSlider();
 			document.title = 'Jon Hawks';
 			setState.header.text('/' + link.split('/')[link.split('/').length - 1].replace('.html', ''));
 			setState.header.css('opacity', 1);
@@ -246,17 +177,4 @@ function clock(){
 	if(clock.hours == 0) clock.hours = 12;
 	
 	return clock.hours + ':' + clock.minutes + ':' + clock.seconds + ' ' + clock.meridiem;
-}
-
-// Checks to see if link works (is 200 OK); colorizes and disables invalid links.
-$(document).ready(checkLinks);
-function checkLinks(){
-	checkLinks.link = $('a');
-	for(var i = 0; i < checkLinks.link.length; i++){
-		$.ajax({
-			url: checkLinks.link[i].href, type: 'HEAD', error: function(){
-				$(checkLinks.link[i]).attr('style', 'color: grey !important; cursor: default; pointer-events: none;');
-			}
-		});
-	}
 }

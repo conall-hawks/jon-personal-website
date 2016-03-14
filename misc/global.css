@@ -9,13 +9,16 @@
 	padding: 0;
 }
 
+html{
+	overflow-x: hidden;
+}
+
 /* Skyblue-on-grey tweed design. */
 body {
 	animation: fade-in 4s;
 	background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgogIDxwYXRoIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6LjU7c3Ryb2tlLW9wYWNpdHk6LjI1IiBkPSJNIDAsMCA0LDQgTSAwLDQgNCwwIi8+Cjwvc3ZnPg==") repeat fixed center / 4px auto rgb(12, 12, 16);
 	color: skyblue;
 	font-family: serif;
-	overflow-x: hidden;
 }
 
 /* Link cursor. */
@@ -37,6 +40,13 @@ input[type=text] {
 .lime	{ color: lime !important;	text-shadow: 0 0 .0625em; }
 .blue	{ color: blue !important;	text-shadow: 0 0 .0625em; }
 .purple	{ color: purple !important;	text-shadow: 0 0 .0625em; }
+
+/* Disabled links. */
+.disabled { 
+	color: grey !important;
+	cursor: default !important;
+	pointer-events: none !important;
+}
 
 /* Text highlighting. */
 ::selection {
@@ -90,15 +100,19 @@ input[type=text] {
 /* #### Header ############################################################## */
 /* ########################################################################## */
 .header {
+	animation: header-slide 1s;
 	height: 150px;
 	border-bottom: 1px solid rgba(0, 255, 255, .25);
+	left: 0;
 	overflow: hidden;
 	position: absolute;
 	white-space: nowrap;
 	width: 100%;
 }
+@keyframes header-slide { 0% { left: 100% }}
 
 .header-logo {
+	animation: header-logo-slide 1.3s;
 	background: url("logo.png") no-repeat scroll center / 100% 100% black;
 	height: 150px;
 	left: 0;
@@ -106,8 +120,10 @@ input[type=text] {
 	width: 16.67%;
 	z-index: 1;
 }
+@keyframes header-logo-slide { 0% { left: 100% } 30% { left: 100% }}
 
 .header-box, .navbar-box {
+	animation: header-box-slide 1.45s;
 	background-color: rgba(0, 16, 16, .5);
 	background-image: url("splatter-left.png"), url("splatter-right.png");
 	background-position: left, right;
@@ -122,6 +138,7 @@ input[type=text] {
 	top: 0;
 	width: 83.33%;
 }
+@keyframes header-box-slide { 0% { left: 100% } 45% { left: 100% }}
 
 .header-box tr, .navbar-box tr {
 	height: 50px;
@@ -276,9 +293,25 @@ input[type=text] {
 .content-box{
 	background: rgba(0, 16, 16, 0.8);
 	border: 1px solid teal;
+	left: 0;
 	margin: 0 0 25px;
+	opacity: 1;
 	position: relative;
 	width: 121.5%;
+}
+.content-box:nth-of-type(odd){
+	animation: content-box-slide-left 1s;
+}
+.content-box:nth-of-type(even){
+	animation: content-box-slide-right 1s;
+}
+@keyframes content-box-slide-left {
+	0%	{ left: 150%; opacity: 0; }
+	15%	{ opacity: 0; }
+}
+@keyframes content-box-slide-right {
+	0%	{ left: -150%; opacity: 0; }
+	15%	{ opacity: 0; }
 }
 
 .content-box > h2:first-of-type{
@@ -402,10 +435,16 @@ input[type=text] {
 }
 
 .content .content-nav{
+	animation: content-nav-slide 1s;
 	left: -25%;
+	opacity: 1;
 	top: 0;
 	width: 22%;
 	z-index: 1;
+}
+@keyframes content-nav-slide {
+	0%	{ left: -100%; opacity: 0 }
+	50%	{ opacity: 0}
 }
 
 .left-box ul, .content-nav ul{
