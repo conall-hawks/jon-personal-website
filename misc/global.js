@@ -6,8 +6,9 @@
 $(window).scroll($.throttle(100, contentSlider));
 $(window).resize(contentSlider);
 function contentSlider(){
-	var top = $(scroll).scrollTop();
-	var height = $(window).height();
+	if(typeof contentSlider.window === 'undefined') contentSlider.window = $(window);
+	var top = contentSlider.window.scrollTop();
+	var height = contentSlider.window.height();
 	var fraction = top + height * .9;
 	var element = $('.content-box:not(:first-of-type)');
 	element.css('transition', '.5s all, .25s opacity');
@@ -17,7 +18,7 @@ function contentSlider(){
 			$(element[index]).css('left', (index % 2 ? '150%' : '-150%'));
 			$(element[index]).css('opacity', 0);
 		}else{
-			$(element[index]).css('transition', '1s all, 1.15s opacity');
+			$(element[index]).css('transition', '.8s all, 1.15s opacity');
 			$(element[index]).css('left', '0%');
 			$(element[index]).css('opacity', 1);
 		}
@@ -52,10 +53,12 @@ function asideSlideOut(){
 function contentSlideOut(){
 	var element = $('.content-box');
 	element.css('transition', '.5s all, .25s opacity');
-	element.each(function(index){
-		$(element[index]).css('left', index % 2 ? '-150%' : '150%');
-		$(element[index]).css('opacity', 0);
-	});
+	setTimeout(function(){
+		element.each(function(index){
+			$(element[index]).css('left', (index % 2 ? '-150%' : '150%'));
+			$(element[index]).css('opacity', 0);
+		});
+	}, 1);
 }
 
 /* ########################################################################## */
@@ -94,7 +97,6 @@ $(document).on('click', '.ajax-link', function(event){
 function setState(link){
 	if(typeof setState.header === 'undefined') setState.header = $('.header-h2');
 	if(typeof setState.content === 'undefined') setState.content = $('.content');
-	
 	asideSlideOut();
 	contentSlideOut();
 	document.title = 'Jon Hawks \u2622 Loading...';

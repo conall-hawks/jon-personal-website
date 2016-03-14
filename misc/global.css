@@ -171,7 +171,7 @@ input[type=text] {
 	color: black;
 	line-height: 48px;
 	text-shadow: 0 0 .125em white, 0 0 .5em blue, 0 0 1em purple;
-	transition: none;
+	transition: color .25s;
 	width: 100%;
 }
 
@@ -384,7 +384,7 @@ input[type=text] {
 .navbox td:first-of-type{
 	color: lime;
 	text-align: right;
-	width: 12%;
+	width: 16.66%;
 }
 
 .navbox td:not(:last-of-type) {
