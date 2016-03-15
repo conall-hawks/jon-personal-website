@@ -286,6 +286,7 @@ input[type=text] {
 .content-box{
 	background: rgba(0, 16, 16, 0.8);
 	border: 1px solid teal;
+	border-radius: 3px;
 	left: 0;
 	margin: 0 0 25px;
 	opacity: 1;
@@ -311,8 +312,11 @@ input[type=text] {
 .content-box > h2:first-of-type{
 	background: rgba(0, 0, 0, .5);
 	border-bottom: 1px solid rgba(0, 255, 255, .25);
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
 	color: white;
-	font-family: typewriter;
+	font-family: 'Share Tech Mono';
+	line-height: 30px;
 	padding: 0 1%;
 	text-shadow: 0 0 1em black;
 }
@@ -322,15 +326,18 @@ input[type=text] {
 	overflow: hidden;
 }
 
+.content-box > p b {
+	color: darkorange;
+}
+
 .content-box a, .content-box a{
-	color: blue;
+	color: lime;
 	text-decoration: none;
-	text-shadow: 0 0 .125em;
 }
 
 .content-box a:focus, .content-box a:hover {
 	text-decoration: underline;
-	text-shadow: 0 0 .5em;
+	text-shadow: 0 0 .0625em;
 }
 
 .content-box img{
@@ -376,7 +383,7 @@ input[type=text] {
 }
 
 .navbox td:first-of-type{
-	color: lime;
+	color: darkorange;
 	text-align: right;
 	width: 16.66%;
 }
@@ -387,6 +394,7 @@ input[type=text] {
 
 .navbox tr {
 	border-top: 1px solid teal;
+	width: 100%;
 }
 
 .navbox tr:not(:last-of-type) {
@@ -414,7 +422,7 @@ input[type=text] {
 	border-bottom: 1px solid rgba(0, 255, 255, .25);
 	color: white;
 	font-size: 120%;
-	font-family: typewriter;
+	font-family: 'Share Tech Mono';
 	text-align: center;
 	white-space: nowrap;
 }
@@ -430,6 +438,7 @@ input[type=text] {
 
 .content .content-nav{
 	animation: content-nav-slide 1s;
+	border-radius: 3px;
 	left: -25%;
 	opacity: 1;
 	top: 0;
