@@ -48,10 +48,13 @@ function asideSlideOut(){
 
 function contentSlideOut(){
 	var element = $('.content-box');
-	element.each(function(index){
-		$(element[index]).css('left', (index % 2 ? '-150%' : '150%'));
-		$(element[index]).css('opacity', 0);
-	});
+	element.css('transition', '.5s all, .25s opacity');
+	setTimeout(function(){
+		element.each(function(index){
+				$(element[index]).css('left', (index % 2 ? '-150%' : '150%'));
+				$(element[index]).css('opacity', 0);
+		});
+	}, 1);
 }
 
 /* ########################################################################## */
