@@ -2,7 +2,8 @@
 	<h2>Sections</h2>
 	<ul>
 		<li><a href="#rewrite">.htaccess RewriteRule</a></li>
-		<li><a href="#limit">Character Limit</a></li>
+		<li><a href="#charlimit">Character Limiting</a></li>
+		<li><a href="#usernames">Usernames</a></li>
 	</ul>
 </aside>
 
@@ -16,13 +17,13 @@ RewriteEngine on
 RewriteRule ^(.(?!(.css|.js|.png|.jpg|.gif|.webm|.svg|.cur|.eot|.woff|.ttf|captcha.php)$))*$ index.php</code>
 </article>
 
-<article class="content-box nohighlight" id="#limit">
+<article class="content-box nohighlight" id="#charlimit">
 	<h2>Character Limit</h2>
 	<code>// An example of limiting characters.
 ^.{7,64}$</code>
 </article>
 
-<article class="content-box nohighlight" id="#limit">
+<article class="content-box nohighlight" id="#usernames">
 	<h2>Usernames</h2>
 	<code>// An example of validating usernames. For conveinence only; not to be used for security purposes!
 // This is lowercase/uppercase letters, and numbers. Four to sixty-four characters long.
