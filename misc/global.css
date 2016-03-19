@@ -1,10 +1,10 @@
-﻿/* ########################################################################## */
+/* ########################################################################## */
 /* #### Global ############################################################## */
 /* ########################################################################## */
 
 /* Normalization. */
 * {
-	cursor: url("../misc/pointer.cur"), auto;
+	cursor: url("pointer.cur"), auto;
 	margin: 0;
 	padding: 0;
 }
@@ -23,12 +23,12 @@ body {
 
 /* Link cursor. */
 a {
-	cursor: url("../misc/hand.cur"), pointer;
+	cursor: url("hand.cur"), pointer;
 }
 
 /* Text cursor. */
 input[type=text] {
-	cursor: url("../misc/text.cur"), text;
+	cursor: url("text.cur"), text;
 }
 
 /* Colors. */
@@ -57,7 +57,7 @@ input[type=text] {
 /* Cutesy typewriter font. */
 @font-face {
 	font-family: typewriter;
-	src: url("../misc/typewriter.woff");
+	src: url("typewriter.woff");
 }
 
 /* Shake animation. */
@@ -113,7 +113,7 @@ input[type=text] {
 
 .header-logo {
 	animation: header-logo-slide 1.3s;
-	background: url("../img/logo.png") no-repeat scroll center / 100% 100% black;
+	background: url("logo.png") no-repeat scroll center / 100% 100% black;
 	height: 150px;
 	left: 0;
 	position: absolute;
@@ -125,7 +125,7 @@ input[type=text] {
 .header-box, .navbar-box {
 	animation: header-box-slide 1.45s;
 	background-color: rgba(0, 16, 16, .5);
-	background-image: url("../img/splatter-left.png"), url("../img/splatter-right.png");
+	background-image: url("splatter-left.png"), url("splatter-right.png");
 	background-position: left, right;
 	background-repeat: no-repeat;
 	background-size: 450px 100%;
